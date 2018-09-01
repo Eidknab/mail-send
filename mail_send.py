@@ -15,7 +15,7 @@ def done():
 	print('Done!')
 
 def failed():
-	print('failed!')
+	print('Failed!')
 	
 mail_user = ''
 mail_password = ''

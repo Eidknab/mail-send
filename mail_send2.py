@@ -4,7 +4,7 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.base import MIMEBase
 from email import encoders
 
-def mail_send(mail_user, mail_password, mail_to, mail_subject, mail_body, filename, smtp_server, smtp_port):
+def mail_send(mail_user, mail_password, mail_to, mail_subject, mail_body, filename, smtp_server='smtp.gmail.com', smtp_port=587):
 	try:
 		attachment = open(filename, 'rb')
 
@@ -27,9 +27,22 @@ def mail_send(mail_user, mail_password, mail_to, mail_subject, mail_body, filena
 		server.login(mail_user, mail_password)
 		server.sendmail(mail_user, mail_to, mail_message)
 		server.quit()
-		done()
+	except AttributeError:
+		print("Input Error! (int)")
+	except TypeError:
+		print("Input Error! (empty var)")
+	except smtplib.SMTPAuthenticationError:
+		print("Authentification Error! (wrong user: {} or password: {})".format(mail_user, mail_password))
+	except FileNotFoundError:
+		print("Attachement {} Not Found!".format(filename))
+	except smtplib.SMTPServerDisconnected:
+		print("Smtp Connexion Error!")
+	except TimeoutError:
+		print("Timeout Error! (wrong smtp port)")
 	except:
 		failed()
+	else:
+		done()
 		
 def done():
 	print('Done!')
@@ -45,7 +58,6 @@ mail_body = 'Salut, ceci est un message en Python!'
 filename = 'file1.txt'
 smtp_server = 'smtp.gmail.com'
 smtp_port = 587
-
 mail_send(mail_user, mail_password, mail_to, mail_subject, mail_body, filename, smtp_server, smtp_port)
 
 	

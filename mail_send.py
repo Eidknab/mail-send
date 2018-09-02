@@ -9,7 +9,7 @@ def mail_send(mail_user, mail_password, mail_to, mail_message, smtp_server='smtp
 		server.quit()
 	except AttributeError:
 		print("Input Error! (int)")
-	except TypeError:
+	except TypeError :
 		print("Input Error! (empty var)")
 	except smtplib.SMTPAuthenticationError:
 		print("Authentification Error! (wrong user: {} or password: {})".format(mail_user, mail_password))
@@ -17,7 +17,8 @@ def mail_send(mail_user, mail_password, mail_to, mail_message, smtp_server='smtp
 		print("Smtp Connexion Error!")
 	except TimeoutError:
 		print("Timeout Error! (wrong smtp port)")
-	except:
+	except BaseException as e:
+		print(e)
 		failed()
 	else:
 		done()

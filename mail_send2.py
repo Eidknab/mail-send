@@ -39,7 +39,8 @@ def mail_send(mail_user, mail_password, mail_to, mail_subject, mail_body, filena
 		print("Smtp Connexion Error!")
 	except TimeoutError:
 		print("Timeout Error! (wrong smtp port)")
-	except:
+	except BaseException as e:
+		print(e)
 		failed()
 	else:
 		done()
